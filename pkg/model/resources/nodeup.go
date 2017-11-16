@@ -61,6 +61,8 @@ function ensure-install-dir() {
   fi
   mkdir -p ${INSTALL_DIR}
   cd ${INSTALL_DIR}
+
+  rm -f ${INSTALL_DIR}/nodeup_done
 }
 
 # Retry a download until we get it. Takes a hash and a set of URLs.
@@ -156,6 +158,8 @@ function download-release() {
   echo "Running nodeup"
   # We can't run in the foreground because of https://github.com/docker/docker/issues/23793
   ( cd ${INSTALL_DIR}; ./nodeup --install-systemd-unit --conf=${INSTALL_DIR}/kube_env.yaml --v=8  )
+
+  touch ${INSTALL_DIR}/nodeup_done
 }
 
 ####################################################################################
